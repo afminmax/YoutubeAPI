@@ -27,3 +27,9 @@ r2.weight = 40
 
 r1.introduce_self()
 r2.introduce_self()
+
+# If one of the attributes is misspelled, the function call will not
+# work as the name of the attributes as they are assigned MUST equal
+# the names as they are in the class.
+
+# To fix this problem, we need a constructor. See robots2.py
