@@ -7,7 +7,7 @@ __pycache__/
 
 # misc
 .env
-.json
+*.json
 
 # key directories
 keys/
