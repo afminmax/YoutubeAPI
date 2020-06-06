@@ -10,16 +10,20 @@ from pathlib import Path
 from googleapiclient.discovery import build
 # import the youtube stats class
 from youtube_statistics import YTstats
+# import youtube_statistics
 
 # load the api key from an ignored git directory - we're not posting this to git!
 dataFolder = Path("X:/Coding/YoutubeAPI/keys/")
 fileToOpen = dataFolder / "gapi.txt"
 with open(fileToOpen) as file:
-    api_Key = file.read()
-print(api_Key)
+    api_key = file.read()
+# print(api_key)
 
 # paste the interested channel id here.
 # later - this will be fetched from a table in a database
-channel_id = 'UCZw_mKFPJMpvIWKWWwWpuVA/videos'
+# hardcoded to start
+channel_id = 'UC00uG71I6iPyx15EX6i_GDA'
 
-yt = YTstats(apikey)
+yt = YTstats(api_key, channel_id)
+yt.get_channel_statistics()
+yt.dump()
