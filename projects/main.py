@@ -29,4 +29,7 @@ yt = YTstats(api_key, channel_id)
 # yt.dump()
 
 
+# the youtube api only allows for 50 items worth of videos per returned page
+# we have to build further functionality to loop through all video result pages to get all the videos
 yt.get_channel_video_data()
+

@@ -31,15 +31,48 @@ class YTstats:
     def get_channel_video_data(self):
         # part 1 - get the video id's first
         channel_videos = self._get_channel_videos(limit=50)
+        print('number of channel videos that are not playlists: ' +
+              str(len(channel_videos)))
+        print(channel_videos)
         # part 2 - get the video statistics
 
-    # helper function
+    # helper function that builds the initial video search URL
     def _get_channel_videos(self, limit=None):
         url = f'https://www.googleapis.com/youtube/v3/search?key={self.api_key}&channelId={self.channel_id}&part=id&order=date'
         if limit is not None and isinstance(limit, int):
             url += '&maxResults=' + str(limit)
-            print('search url: ' + url)
+            # print('search url: ' + url)
 
+        vid, npt = self._get_channel_videos_per_page(url)
+        index = 0
+        while(npt is not None and index < 10):
+            nexturl = url + "&pageToken=" + npt
+            next_vid, npt = self._get_channel_videos_per_page(nexturl)
+            vid.update(next_vid)
+            index += 1
+
+        return vid
+
+    # helper function that gets all the pages of videos and stores the video id's
+
+    def _get_channel_videos_per_page(self, url):
+        json_url = requests.get(url)
+        data = json.loads(json_url.text)
+        channel_videos = dict()
+        if 'items' not in data:
+            return channel_videos, None
+
+        item_data = data['items']
+        nextPageToken = data.get('nextPageToken', None)
+        for item in item_data:
+            try:
+                kind = item['id']['kind']
+                if kind == 'youtube#video':
+                    video_id = item['id']['videoId']
+                    channel_videos[video_id] = dict()
+            except KeyError:
+                print('problem with the keys and/or data')
+        return channel_videos, nextPageToken
 
 # this function dumps the content of the channel into a json file
 
