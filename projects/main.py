@@ -22,14 +22,13 @@ with open(fileToOpen) as file:
 # paste the interested channel id here.
 # later - this will be fetched from a table in a database
 # hardcoded to start
-channel_id = 'UC00uG71I6iPyx15EX6i_GDA'
+channel_id = 'UCbXgNpp0jedKWcQiULLbDTA'
 
 yt = YTstats(api_key, channel_id)
-# yt.get_channel_statistics()
-# yt.dump()
-
+yt.get_channel_statistics()
 
 # the youtube api only allows for 50 items worth of videos per returned page
 # we have to build further functionality to loop through all video result pages to get all the videos
 yt.get_channel_video_data()
 
+yt.dump()
