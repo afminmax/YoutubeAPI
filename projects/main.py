@@ -25,5 +25,8 @@ with open(fileToOpen) as file:
 channel_id = 'UC00uG71I6iPyx15EX6i_GDA'
 
 yt = YTstats(api_key, channel_id)
-yt.get_channel_statistics()
-yt.dump()
+# yt.get_channel_statistics()
+# yt.dump()
+
+
+yt.get_channel_video_data()
