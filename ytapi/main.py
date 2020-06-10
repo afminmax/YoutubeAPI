@@ -14,18 +14,24 @@ with open(fileToOpen) as file:
     api_key = file.read()
 print('the api key to be used is: ' + api_key)
 
-# S3-TEST CHANNEL DATA
-# Youtube channels have unique Id's, this small list is used for initial testing
-# Later, section 3 will be generalized for use with either MongoDB or TinyDB
-
+# S3-GET LIST OF CHANNELS & THEIR YOUTUBE UNIQUE ID's
+# Currently read from handmade json list to get things started.
+# Later, section 3 will get the list from either MongoDB or TinyDB
+channelList = {}
 with open('channels.json') as json_file:
     data = json.load(json_file)
     for channel in data:
-        print('Querying channel ' +
-              channel['channelName'] + ' with channel ID of: ' + channel['channelId'])
-        yt = ChannelStats(api_key, channel['channelId'])
-        # print(yt)
-        print(yt.get_channel_statistics())
+        channelList.update({channel['channelName']: channel['channelId']})
+print(channelList)
+
+
+# S4-GET
+for channel in data:
+    print('Querying channel ' +
+          channel['channelName'] + ' with channel ID of: ' + channel['channelId'])
+    yt = ChannelStats(api_key, channel['channelId'])
+    # print(yt)
+    print(yt.get_channel_statistics())
 
 
 # stop point - read the statistics, compare and update the json file.
