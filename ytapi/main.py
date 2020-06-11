@@ -6,7 +6,7 @@ from YTchannelStats import ChannelStats
 from pathlib import Path
 from googleapiclient.discovery import build
 import json
-import dns  # this is in fact the dnspython package
+import dns.resolver  # this is in fact the dnspython package
 import pymongo
 from pymongo import MongoClient
 
@@ -22,8 +22,8 @@ with open(fileToOpen) as file:
 fileToOpen = dataFolder / "dbc.txt"
 with open(fileToOpen) as file:
     dbc_key = file.read()
-mongoUri = MongoClient(dbc_key)
-db = mongoUri['channelDB']
+myClient = MongoClient(dbc_key)
+db = myClient['channelsDB']
 collection = db['ytchannels']
 # print('the db key to be used is: ' + dbc_key)
 
