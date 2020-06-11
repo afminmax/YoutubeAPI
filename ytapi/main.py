@@ -6,14 +6,24 @@ from YTchannelStats import ChannelStats
 from pathlib import Path
 from googleapiclient.discovery import build
 import json
-from tinydb import TinyDB, Query
+import pymongo
+from pymongo import MongoClient
+
 
 # S2-READING THE API KEY
 dataFolder = Path("X:/Coding/YoutubeAPI/keys/")
 fileToOpen = dataFolder / "gapi.txt"
 with open(fileToOpen) as file:
     api_key = file.read()
-print('the api key to be used is: ' + api_key)
+# print('the api key to be used is: ' + api_key)
+
+# S3-GETTING THE DB INFO
+fileToOpen = dataFolder / "dbc.txt"
+with open(fileToOpen) as file:
+    dbc_key = file.read()
+cluster = dbc_key
+# print('the db key to be used is: ' + dbc_key)
+
 
 # S3 GET LIST OF CHANNELS & THEIR UNIQUE YOUTUBE ID's
 # Currently read from handmade json list to get things started.
@@ -25,11 +35,6 @@ print('the api key to be used is: ' + api_key)
 #         channelList.update({channel['channelName']: channel['channelId']})
 # print(channelList)
 
-
-# build query here:
-# get the ytcId and displayName for each document
-Channel = Query()
-db.search(Channel.ytcId)
 
 # S4-GET THE CURRENT CHANNEL VIDEO AND SUBSCRIBER COUNTS
 for channelName, channelId in channelList.items():
