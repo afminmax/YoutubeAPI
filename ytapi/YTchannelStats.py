@@ -22,6 +22,9 @@ class ChannelStats:
             data = data["items"][0]["statistics"]
         except:
             data = None
-
+        print(data["items"][0]["statistics"])
         self.channel_statistics = data
         return data
+
+    def update_channel_statistics(self, viewCount):
+        print(self.channel_statistics['viewCount'])
