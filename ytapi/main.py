@@ -38,6 +38,9 @@ for record in collection.find({}, {'_id': 1, 'ytcId': 1, 'displayName': 1, 'view
     yt = ChannelStats(api_key, record['ytcId'])
     # print(yt)
     channelStatistics = yt.get_channel_statistics()
+    print(channelStatistics['viewCount'])
+
+    yt.update_channel_statistics()
 
     print(channelStatistics)
     print()
