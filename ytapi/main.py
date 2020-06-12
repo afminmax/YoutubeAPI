@@ -38,6 +38,29 @@ collection = db['ytchannels']
 #         channelList.update({channel['channelName']: channel['channelId']})
 # print(channelList)
 
+# query the channel ids from mongodb into a temp dictionary (this will later have switches)
+channelList = []
+for item in collection.find({}, {"_id": 0, "ytcId": 1, 'displayName': 1}):
+    print(item)
+    channelList.append(item)
+channelList
+channelList[0]['ytcId']
+
+
+# query each video
+for record in channelList:
+    print('Querying channel ' +
+          record['displayName'] + ' with channel ID of: ' + record['ytcId'])
+
+    yt = ChannelStats(api_key, record['ytcId'])
+    # print(yt)
+    channelStatistics = yt.get_channel_statistics()
+    print(channelStatistics)
+
+
+# get statistics
+# update the channels statistics in the database
+
 
 # S4-GET THE CURRENT CHANNEL VIDEO AND SUBSCRIBER COUNTS
 for channelName, channelId in channelList.items():
