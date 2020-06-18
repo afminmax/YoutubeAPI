@@ -39,3 +39,18 @@ for pet in [snoopy, heathcliff]:
 # snoopy sagt woof!
 # <class '__main__.Cat'>
 # heathcliff sagt meow!
+
+# now we feed the pets into a function, it does not know whether we will feed in a dog or a cat....
+
+
+def pet_speak(pet):
+    print(pet.speak())
+
+
+# the object instance, in this case snoopy is from the DOG class, that class has
+# the method "speak" for dogs. when called in this function, python uses the method from the DOG class
+# that snoopy came from - thus knowing to make the answer "woof"
+pet_speak(snoopy)
+
+# ditto for the cat
+pet_speak(heathcliff)
