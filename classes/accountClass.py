@@ -4,9 +4,8 @@ class Account:
         self.name = name
         self.amount = amount
 
-    def accountInfo(self):
-        print('Account owner: ' + self.name)
-        print('Account balance: ' + str(self.amount))
+    def __str__(self):
+        return f'Account owner: {self.name} \n Account balance: {str(self.amount)}'
 
     def deposit(self, credit):
         self.amount = self.amount + credit
@@ -36,4 +35,4 @@ account1.withdraw(200)
 
 account1.withdraw(450)
 
-account1.amount
+print(account1)
