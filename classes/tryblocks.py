@@ -50,3 +50,50 @@ def ask_for_int():
 
 
 ask_for_int()
+
+
+# EXAMPLE 5 -
+try:
+    # for i in ['a', 'b', 'c']:
+    #     print(i**2)
+
+    for i in [5, 7, 9]:
+        print(i**2)
+except:
+    print('you biffed it')
+finally:
+    print('end of code run')
+
+
+# EXAMPLE 6 -
+x = 5
+y = 1.25
+
+try:
+    z = x / y
+except:
+    print('all your maths are foobar, try something better')
+finally:
+    print('i did something')
+    print('z = ' + str(z))
+
+
+# EXAMPLE 7 -
+
+
+def ask():
+    while True:
+        try:
+            user_input = int(input('give me an integer number: '))
+            result = user_input**2
+            print('the square is: ' + str(result))
+            break
+        except:
+            print('you did not enter a number!')
+            print('enter a number!')
+            continue
+        finally:
+            print('i did something, the end.')
+
+
+ask()
