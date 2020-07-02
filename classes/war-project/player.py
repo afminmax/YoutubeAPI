@@ -1,5 +1,3 @@
-import
-
 # PLAYER CLASS OUTLINE
 # This class holds a players current LIST of cards
 #   Players should be able to add or remove cards from their hand (list of cards)
