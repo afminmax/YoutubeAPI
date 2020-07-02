@@ -1,0 +1,9 @@
+Blackjack will be simplified version
+
+Players:
+    1.Computer Dealer
+    2.Human Player x1
+
+Players has a bank roll. (A bank account)
+    1. Human places bet from this bankroll
+    2. 
