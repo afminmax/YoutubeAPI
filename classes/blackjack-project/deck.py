@@ -15,31 +15,32 @@ class Deck:
 
     def __init__(self):
         # deck starts as an empty list
-        self.all_cards = []
+        self.deck = []
 
+        # deck building loop
         for suit in self.suits:
             for rank in self.ranks:
                 created_card = Card(suit, rank)
-                self.all_cards.append(created_card)
+                self.deck.append(created_card)
+
+    # print function to see deck contents
+    def __str__(self):
+        deck_comp = ''
+        for card in self.deck:
+            deck_comp += '\n' + card.__str__()
+        return "The deck has: " + deck_comp + '\n... Num of Cards: ' + str(len(self.deck))
 
     # method to shuffle the cards randomly
     def shuffle(self):
-        random.shuffle(self.all_cards)
+        random.shuffle(self.deck)
 
     # method to pull out one card
-    def deal_one(self):
-        return self.all_cards.pop()
+    def deal(self):
+        single_card = self.deck.pop()
+        return single_card
 
 
-deck = Deck()
-print(deck)
-
-for card in deck.all_cards:
-    print(card)
-
-print('the new deck has: ' + str(len(deck.all_cards)) + ' cards')
-
-deck.shuffle()
-for card in deck.all_cards:
-    print(card)
-print('the shuffled deck has: ' + str(len(deck.all_cards)) + ' cards')
+inplay_deck = Deck()
+print(inplay_deck)
+inplay_deck.shuffle()
+print(inplay_deck)

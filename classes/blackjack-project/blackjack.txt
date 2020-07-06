@@ -6,4 +6,6 @@ Players:
 
 Players has a bank roll. (A bank account)
     1. Human places bet from this bankroll
-    2. 
+    2. There are chips.
+    3. Track the chips.
+    4. Add additional rules per video....
