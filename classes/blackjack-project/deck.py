@@ -40,7 +40,7 @@ class Deck:
         return single_card
 
 
-inplay_deck = Deck()
-print(inplay_deck)
-inplay_deck.shuffle()
-print(inplay_deck)
+# inplay_deck = Deck()
+# print(inplay_deck)
+# inplay_deck.shuffle()
+# print(inplay_deck)
