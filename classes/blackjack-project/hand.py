@@ -41,23 +41,23 @@ class Hand:
 
 # checks....
 
-# build a deck
-test_deck = Deck()
-test_deck.shuffle()
-print(test_deck)
+# # build a deck
+# test_deck = Deck()
+# test_deck.shuffle()
+# print(test_deck)
 
-# build a player
-test_player = Hand()
-# get a card from the deck
-pulled_card = test_deck.deal()
-print(pulled_card)
-# add the card to the players hand
-test_player.add_card(pulled_card)
-print(test_player.value)
+# # build a player
+# test_player = Hand()
+# # get a card from the deck
+# pulled_card = test_deck.deal()
+# print(pulled_card)
+# # add the card to the players hand
+# test_player.add_card(pulled_card)
+# print(test_player.value)
 
-# add another card
-test_player.add_card(test_deck.deal())
-print(test_player.value)
+# # add another card
+# test_player.add_card(test_deck.deal())
+# print(test_player.value)
 
 
 # truthiness....
