@@ -2,6 +2,12 @@ from deck import Deck
 from chips import Chips
 from hand import Hand
 
+
+# declare a Boolean value to be used to control while loops.
+# this is a common practice used to control the flow of the game.
+playing = True
+
+
 # helper functions to facilitate the game
 
 # function to take a bet
@@ -12,15 +18,19 @@ def take_bet(chips):
     while True:
 
         try:
-            chips.bet = int(input('How many chips to bet?'))
-        except:
+            chips.bet = int(input('How many chips to bet?  '))
+        except ValueError:
             print('Sorry, please provide an integer')
         else:
-            if chips.bet > chips.total:
-                print('Sorry, your bet cannot exceed your current amount' + chips.total)
-
+            if chips.bet > chips.total or chips.bet < 0:
+                print(
+                    'Sorry, your bet cannot exceed your current amount or be negative: ' + str(chips.total))
+            else:
+                break
 
 # a function for taking hits
+
+
 def hit(deck, hand):
 
     single_card = deck.deal()
@@ -104,12 +114,12 @@ while True:
     player_hand = Hand()
     player_hand.add_card(deck.deal())
     player_hand.add_card(deck.deal())  # two cards!
-    print(player_hand)
+    # print(player_hand)
 
     dealer_hand = Hand()
     dealer_hand.add_card(deck.deal())
     dealer_hand.add_card(deck.deal())
-    print(dealer_hand)
+    # print(dealer_hand)
 
     # 3. setup the players chips
     player_chips = Chips()
@@ -148,7 +158,7 @@ while True:
             dealer_busts(player_hand, dealer_hand, player_chips)
         elif dealer_hand.value > player_hand.value:
             dealer_wins(player_hand, dealer_hand, player_chips)
-        elif dealer_hand.value < player_hand:
+        elif dealer_hand.value < player_hand.value:
             player_wins(player_hand, dealer_hand, player_chips)
         else:
             push(player_hand, dealer_hand)
@@ -157,7 +167,7 @@ while True:
     print('\n Player total chips: ' + str(player_chips.total))
 
     # ask to play again
-    new_game = input('Would you like to play again? y/n')
+    new_game = input('Would you like to play again? y/n:  ')
 
     if new_game[0].lower() == 'y':
         playing = True
