@@ -10,6 +10,8 @@ import dns.resolver  # this is in fact the dnspython package
 import pymongo
 from pymongo import MongoClient
 
+from connections import Connections
+
 
 # S2-READING THE API KEY
 dataFolder = Path("X:/Coding/YoutubeAPI/keys/")
@@ -27,11 +29,18 @@ db = myClient['channelsDB']
 collection = db['ytchannels']
 # print('the db key to be used is: ' + dbc_key)
 
+# newDbConn = Connections()
+# newDbConn.dbConnection()
+
+# print(collection)
+
 # S4-Query each video direct from DB
 # this method chosen over creating a separate list, because
 # a seperate list may be deconstructed due to system/memory crash.
 # if iterated across the db, failure can only happen in the record
 # being processed.
+
+
 for record in collection.find({}, {'_id': 1, 'ytcId': 1, 'displayName': 1, 'viewCount': 1}):
     print('Querying channel ' +
           record['displayName'] + ' with channel ID of: ' + record['ytcId'] + ' and system ID of: ' + str(record['_id']))
@@ -56,7 +65,7 @@ for record in collection.find({}, {'_id': 1, 'ytcId': 1, 'displayName': 1, 'view
                               '$set': {'viewCount': int(channelStatistics['viewCount'])}})
         print('the new updated view count is: ' +
               channelStatistics['viewCount'])
-    print()
+    # print()
     # yt.update_channel_statistics()
 
 
