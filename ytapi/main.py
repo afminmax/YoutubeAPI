@@ -49,6 +49,8 @@ for record in collection.find({}, {'_id': 1, 'ytcId': 1, 'displayName': 1, 'view
     channelStatistics = yt.get_channel_statistics()
     print(channelStatistics['viewCount'])
 
+    # july 8 - end, already broken here - break is in mongo from stack dump
+
     yt.update_channel_statistics()
 
     print(channelStatistics)
