@@ -26,11 +26,30 @@ class ChannelStats:
             data = data["items"][0]["statistics"]
         except:
             data = None
-        print(data["items"][0]["statistics"])
+        # print(data)
         self.channel_statistics = data
         return data
 
 
+# yada on line 29 = print(data["items"][0]["statistics"])
+
 # bb = ChannelStats('12345', 2)
 
 # bb.update_channel_statistics()
+
+
+# url = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&id=UCaE309xZTS4XdecZSoaYzFg&key=AIzaSyDeY-I6kx427L6grhfdsONFbKd8NpKzLNQ'
+# print('the url to send is: ' + url)
+# json_url = requests.get(url)
+# data = json.loads(json_url.text)
+# try:
+#     data = data["items"][0]["statistics"]
+# except:
+#     data = None
+
+# print(data)
+
+# print(data["items"][0]["statistics"])
+# print(data)
+# self.channel_statistics = data
+# return data

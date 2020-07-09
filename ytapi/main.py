@@ -49,17 +49,22 @@ for record in collection.find({}, {'_id': 1, 'ytcId': 1, 'displayName': 1, 'view
     yt = ChannelStats(api_key, record['ytcId'])
     # print(yt)
     channelStatistics = yt.get_channel_statistics()
-    print(channelStatistics['viewCount'])
+    print('\n')
+    # print(channelStatistics['viewCount'])
 
-    # july 8 - end, already broken here - break is in mongo from stack dump
-
-    yt.update_channel_statistics()
+    # yt.update_channel_statistics()
 
     print(channelStatistics)
-    print()
+    # print()
     print('the view count for ' +
           record['displayName'] + ' is: ' + channelStatistics['viewCount'])
-    if (int(channelStatistics['viewCount']) == record['viewCount']):
+
+    print(channelStatistics['viewCount'])
+
+    # ERROR is in finding the viewcount for the particular record in question
+    print(record['viewCount'])
+
+    if (int(channelStatistics["viewCount"]) == record["viewCount"]):
         print('viewcounts match')
     elif (int(channelStatistics['viewCount']) > record['viewCount']):
         print('the current view count is: ' +
