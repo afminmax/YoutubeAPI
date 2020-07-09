@@ -38,7 +38,7 @@ class ChannelStats:
 # bb.update_channel_statistics()
 
 
-# url = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&id=UCaE309xZTS4XdecZSoaYzFg&key=AIzaSyDeY-I6kx427L6grhfdsONFbKd8NpKzLNQ'
+#
 # print('the url to send is: ' + url)
 # json_url = requests.get(url)
 # data = json.loads(json_url.text)
