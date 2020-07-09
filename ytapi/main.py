@@ -18,7 +18,7 @@ dataFolder = Path("X:/Coding/YoutubeAPI/keys/")
 fileToOpen = dataFolder / "gapi.txt"
 with open(fileToOpen) as file:
     api_key = file.read()
-# print('the api key to be used is: ' + api_key)
+print('the youtube api key to be used is: ' + api_key)
 
 # S3-GETTING THE DB INFO AND SETTING UP THE CONNECTION
 fileToOpen = dataFolder / "dbc.txt"
@@ -27,12 +27,14 @@ with open(fileToOpen) as file:
 myClient = MongoClient(dbc_key)
 db = myClient['channelsDB']
 collection = db['ytchannels']
-# print('the db key to be used is: ' + dbc_key)
+print('the db key to be used is: ' + dbc_key)
 
-# newDbConn = Connections()
-# newDbConn.dbConnection()
+print(type(db))
+print(db)
 
-# print(collection)
+print(type(collection))
+print(collection)
+
 
 # S4-Query each video direct from DB
 # this method chosen over creating a separate list, because
