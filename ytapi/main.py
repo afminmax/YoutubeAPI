@@ -42,27 +42,33 @@ print(collection)
 # if iterated across the db, failure can only happen in the record
 # being processed.
 
+collection.find()
+db.collection.find({}, {'_id': 1})
+
+for record in collection.find({}, {'_id': 1, 'ytcId': 1, 'displayName': 1, 'channelCounts.viewCount': 1}):
+    print('Querying channel ' +
+          record['displayName'] + ' with channel ID of: ' + record['ytcId'] + ' and system ID of: ' + str(record['_id']) +
+          ' a view count of: ' + record['channelCounts.viewCount']
+
 
 for record in collection.find({}, {'_id': 1, 'ytcId': 1, 'displayName': 1, 'viewCount': 1}):
     print('Querying channel ' +
-          record['displayName'] + ' with channel ID of: ' + record['ytcId'] + ' and system ID of: ' + str(record['_id']))
-    yt = ChannelStats(api_key, record['ytcId'])
-    # print(yt)
-    channelStatistics = yt.get_channel_statistics()
-    print('\n')
-    # print(channelStatistics['viewCount'])
+          record['displayName'] + ' with channel ID of: ' + record['ytcId'] + ' and system ID of: ' + str(record['_id']) +
+          ' a view count of: ' + record['channelCounts'][0]['viewCount']
 
-    # yt.update_channel_statistics()
+    channelCounts[0].viewCount
 
+    yt=ChannelStats(api_key, record['ytcId'])
+    channelStatistics=yt.get_channel_statistics()
     print(channelStatistics)
-    # print()
     print('the view count for ' +
           record['displayName'] + ' is: ' + channelStatistics['viewCount'])
-
+    print('\n')
     print(channelStatistics['viewCount'])
 
     # ERROR is in finding the viewcount for the particular record in question
-    print(record['viewCount'])
+    print(record['channelCounts'][0]['viewCount'])
+
 
     if (int(channelStatistics["viewCount"]) == record["viewCount"]):
         print('viewcounts match')
