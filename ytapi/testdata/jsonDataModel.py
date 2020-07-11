@@ -1,16 +1,17 @@
 # here, create reference lookups to access various levels of the JSON channel document
+# this sort of replicates the mongodb collection
 
 import json
 
-# dataFolder = Path("X:/Coding/YoutubeAPI/")
+# dataFolder = Path("X:/Coding/YoutubeAPI/ytapi/testdata")
 # fileToOpen = dataFolder / "channelsDb.json"
-with open('channelsDb.json') as json_file:
+with open('mdb-channel-document.json') as json_file:
     data = json.load(json_file)
 
 print(type(data))
 # elements have integeger key id's
 
-# get the id of an element, in this case the first
+# get the id of an element, in this case the first which is the zeroth item...
 data[0]['_id']
 
 # get the youtube id of an element, in this case the first
