@@ -1,8 +1,8 @@
 # here, create reference lookups to access various levels of the JSON channel document
 # this sort of replicates the mongodb collection
-#
+# would be nice to have
 
-import pymong
+import pymongo
 import json
 
 # dataFolder = Path("X:/Coding/YoutubeAPI/ytapi/testdata")
