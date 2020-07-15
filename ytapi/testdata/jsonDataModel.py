@@ -1,14 +1,29 @@
 # here, create reference lookups to access various levels of the JSON channel document
-# this sort of replicates the mongodb collection
+# added equivalent mongodb reference db lookup as well
 # would be nice to have
 
 import pymongo
+from pymongo import MongoClient
 import json
+from pathlib import Path
 
-# dataFolder = Path("X:/Coding/YoutubeAPI/ytapi/testdata")
-# fileToOpen = dataFolder / "channelsDb.json"
+# MAKE LOCAL JSON CONNECTION
 with open('mdb-channel-document.json') as json_file:
-    data = json.load(json_file)
+    jsonFileData = json.load(json_file)
+print(jsonFileData)
+
+# MAKE MONGODB CONNECTION
+dataFolder = Path("X:/Coding/YoutubeAPI/keys/")
+fileToOpen = dataFolder / "dbc.txt"
+with open(fileToOpen) as file:
+    dbc_key = file.read()
+myClient = MongoClient(dbc_key)
+db = myClient['channelsDB']
+collection = db['ytchannels']
+print('the db key to be used is: ' + dbc_key)
+print(db)
+print(collection)
+
 
 print(type(data))
 # elements have integeger key id's
