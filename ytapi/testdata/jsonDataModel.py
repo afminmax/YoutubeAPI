@@ -11,6 +11,7 @@ from pathlib import Path
 with open('mdb-channel-document.json') as json_file:
     jsonFileData = json.load(json_file)
 print(jsonFileData)
+print(type(jsonFileData))
 
 # MAKE MONGODB CONNECTION
 dataFolder = Path("X:/Coding/YoutubeAPI/keys/")
@@ -23,6 +24,12 @@ collection = db['ytchannels']
 print('the db key to be used is: ' + dbc_key)
 print(db)
 print(collection)
+
+# look at all items
+jsonFileData[0]
+
+for record in jsonFileData['_id']:
+    print(jsonFileData[record])
 
 
 print(type(data))
