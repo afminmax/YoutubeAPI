@@ -25,19 +25,126 @@ print('the db key to be used is: ' + dbc_key)
 print(db)
 print(collection)
 
-# look at all items
-jsonFileData[0]
-
-for record in jsonFileData['_id']:
+# ---------------------------------------------------------------------------------
+# 1-LOOK AT ALL ITEMS (SELECT *)
+# outputs all data in json object
+# json
+for record in jsonFileData:
     print(jsonFileData[record])
+    print('\n')
+
+# mongodb
+for record in collection.find():
+    print(record)
+    print('\n')
+
+# ---------------------------------------------------------------------------------
+# 2-LOOK AT THE FIRST ITEM (SELECT (*) TOP 1)
+# outputs all data in json object
+# json - this is known by looking at the data. how to get first ordinal?? TBD
+jsonFileData["ElderFox Documentaries"]
+
+# mongodb
+print(collection.find_one())
+
+# ---------------------------------------------------------------------------------
+# 3-GET THE ID OF A SINGLE CHANNEL
+# get the id of one channel, in this case the first which is the zeroth item...
+# json
+jsonFileData['ElderFox Documentaries']['_id']
+
+# mongodb
+# The second parameter of the find() method is an object describing which fields to
+# include in the result. Using find_one() gets the first channel.
+collection.find_one({}, {'_id': 1})
+
+# ---------------------------------------------------------------------------------
+# 4-GET THE ID OF ALL CHANNELS
+# json
+for record in jsonFileData:
+    print(jsonFileData[record]['_id'])
+
+# mongodb
+for record in collection.find({}, {'_id': 1}):
+    print(record)
+    print('\n')
+
+# ---------------------------------------------------------------------------------
+# 5-GET THE YOUTUBE ID OF ALL CHANNELS
+# json
+for record in jsonFileData:
+    print(jsonFileData[record]['ytcId'])
+
+# mongodb
+for record in collection.find({}, {'_id': 1, 'ytcId': 1}):
+    print(record)
+    print('\n')
+
+# ---------------------------------------------------------------------------------
+# 6-GET THE YOUTUBE ID & CHANNEL NAME OF ALL CHANNELS
+# json
+for record in jsonFileData:
+    print(jsonFileData[record]['ytcId'] + ' ' +
+          jsonFileData[record]['displayName'])
+
+# mongodb
+for record in collection.find({}, {'_id': 1, 'ytcId': 1, 'displayName': 1}):
+    print(record)
+    print('\n')
+
+# ---------------------------------------------------------------------------------
+# 7-GET THE YOUTUBE ID & VIEW COUNT OF A SINGLE CHANNEL
+# Traverse into a channel array
+# json
+jsonFileData['ElderFox Documentaries']['channelCounts'][0]['viewCount']
+
+# mongodb
+# hint - must use dot notation to get to sub-docs
+collection.find_one({}, {'channelCounts.viewCount': 1})
+
+# ---------------------------------------------------------------------------------
+# 8-GET THE YOUTUBE ID & VIEW COUNT OF MULTIPLE CHANNELS
+# Traverse into a channel array
+# json
+for record in jsonFileData:
+    print(jsonFileData[record]['channelCounts'][0]['viewCount'])
+
+# mongodb
+# hint - must use dot notation to get to sub-docs
+for record in collection.find({}, {'channelCounts.viewCount': 1}):
+    print(record)
+
+# ---------------------------------------------------------------------------------
+# 9-COMPARE VALUES FROM JSON TO MONGODB
+# comparing by variable comparison
+x = jsonFileData['ElderFox Documentaries']['_id']
+y = collection.find_one({}, {'_id': 1})
+y.get('_id')
+if x == y.get('_id'):
+    print('they are equal')
+else:
+    print('they are not equal')
+
+# comparing by raw operations
+# note, that to access the value in the returned value from the mongodb query,
+# we have to use the dictionary get() method to specify the actual key, in this case '_id'
+if jsonFileData['ElderFox Documentaries']['_id'] == collection.find_one({}, {'_id': 1}).get('_id'):
+    print('they are equal')
+else:
+    print('they are not equal')
 
 
-print(type(data))
-# elements have integeger key id's
-
-# get the id of an element, in this case the first which is the zeroth item...
-data[0]['_id']
-
+# ---------------------------- OLD STUFF BELOW --------------------------------
+# mongodb
+# GET THE YOUTUBE ID & VIEW COUNT OF A SINGLE CHANNEL
+# json
+# mongodb
+# GET THE YOUTUBE ID & VIEW COUNT OF A SINGLE CHANNEL
+# json
+# mongodb
+# GET THE YOUTUBE ID & VIEW COUNT OF A SINGLE CHANNEL
+# json
+# mongodb
 # get the youtube id of an element, in this case the first
 data[0]['ytcId']
 
