@@ -133,6 +133,8 @@ if jsonFileData['ElderFox Documentaries']['_id'] == collection.find_one({}, {'_i
 else:
     print('they are not equal')
 
+# - 10 Add more here
+# Mongodb query with more conditionals, like, where, and ,or in
 
 # ---------------------------- OLD STUFF BELOW --------------------------------
 # mongodb
