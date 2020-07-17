@@ -1,6 +1,6 @@
 # here, create reference lookups to access various levels of the JSON channel document
 # added equivalent mongodb reference db lookup as well
-# would be nice to have
+# https://docs.mongodb.com/manual/tutorial/query-documents/
 
 import pymongo
 from pymongo import MongoClient
@@ -110,20 +110,30 @@ for record in collection.find({}, {'_id': 1, 'ytcId': 1, 'displayName': 1}):
 jsonFileData['ElderFox Documentaries']['channelCounts'][0]['viewCount']
 
 # mongodb
-# hint - must use dot notation to get to sub-docs
-collection.find_one({}, {'channelCounts.viewCount': 1})
+# hint - must use dot notation to get to sub-docs and a specific sub-key
+collection.find_one({}, {'ytcId': 1, 'channelCounts.viewCount': 1})
+
+# mongodb - set equal to a variable and parse each item in the dictionary
+result_a = collection.find_one({}, {'ytcId': 1, 'channelCounts.viewCount': 1})
+result_a.get('ytcId')
+result_a.get('channelCounts')
+result_a['channelCounts'][0]['viewCount']
+result_a['channelCounts'][0].get('viewCount')
+
 
 # ---------------------------------------------------------------------------------
 # 8-GET THE YOUTUBE ID & VIEW COUNT OF MULTIPLE CHANNELS
 # Traverse into a channel array
 # json
 for record in jsonFileData:
-    print(jsonFileData[record]['channelCounts'][0]['viewCount'])
+    print(str(jsonFileData[record]['ytcId'] + ' ' +
+              str(jsonFileData[record]['channelCounts'][0]['viewCount'])))
 
 # mongodb
 # hint - must use dot notation to get to sub-docs
-for record in collection.find({}, {'channelCounts.viewCount': 1}):
+for record in collection.find({}, {'ytcId': 1, 'channelCounts.viewCount': 1}):
     print(record)
+
 
 # ---------------------------------------------------------------------------------
 # 9-COMPARE VALUES FROM JSON TO MONGODB
@@ -144,77 +154,19 @@ if jsonFileData['ElderFox Documentaries']['_id'] == collection.find_one({}, {'_i
 else:
     print('they are not equal')
 
-# - 10 Add more here
-# Mongodb query with more conditionals, like, where, and ,or in
+# ---------------------------------------------------------------------------------
+# 10-MONGODB SPECIFIC QUERIES:
+# find a specific channel id by mongodb id:
+collection.find_one({'_id': 3})
 
-# ---------------------------- OLD STUFF BELOW --------------------------------
-# mongodb
-# GET THE YOUTUBE ID & VIEW COUNT OF A SINGLE CHANNEL
-# json
-# mongodb
-# GET THE YOUTUBE ID & VIEW COUNT OF A SINGLE CHANNEL
-# json
-# mongodb
-# GET THE YOUTUBE ID & VIEW COUNT OF A SINGLE CHANNEL
-# json
-# mongodb
-# get the youtube id of an element, in this case the first
-data[0]['ytcId']
+# find a specific channel by youtube id:
+collection.find_one({'ytcId': 'UCNqNkZ7kKfqimqHkgbWMNYA'})
 
-# get the activity status
-data[0]['channelActive']
+# find a specific channel by channel display name:
+collection.find_one({'displayName': 'Launch Pad Astronomy'})
 
-# get all the channel counts, this has a sub-document aka array
-data[0]['channelCounts']
-
-# get the video count from the channel counts sub-document
-data[0]['channelCounts'][0]['dts']
-data[0]['channelCounts'][0]['videoCount']
-data[0]['channelCounts'][0]['playlistCount']
-data[0]['channelCounts'][0]['subscriberCount']
-data[0]['channelCounts'][0]['viewCount']
-
-# get all of the tags
-data[0]['tags']
-
-# get any one tag (the zeroeth tag in this case)
-data[0]['tags'][0]
-
-# get the video id sub-document {note-it is not done yet}
-data[0]['videoIds']
-
-# get the playlist id sub-document {note-it is not done yet}
-data[0]['playlistIds']
-
-# get all the social links
-data[0]['socialLinks']
-
-# get any one social link
-data[0]['socialLinks'][0]['email']
-data[0]['socialLinks'][0]['twitter']
-data[0]['socialLinks'][0]['facebook']
-data[0]['socialLinks'][0]['instagram']
-data[0]['socialLinks'][0]['twitch']
-data[0]['socialLinks'][0]['wechat']
-data[0]['socialLinks'][0]['discord']
-
-# get any web urls
-data[0]['webLinks'][0]['channelAffiliatedSite']
-
-# get any alternate youtube channel id's
-data[0]['altYtChannels']
-
-# get the description
-data[0]['ytDescription']
-
-# get the date the site was added to the database
-data[0]['dateAdded']
-
-# get the date the site was paused from displaying in the video wall
-data[0]['datePaused']
-
-# get the date the site was removed from the video wall {note: need to make an audit log}
-data[0]['dateRemoved']
-
-# get the date of the last statistics and video update from Youtube
-data[0]['lastUpdated']
+# find a specific channel using a like term:
+# see documentation for regex formulas
+some_results = collection.find({'displayName': {'$regex': 'Bec'}})
+for x in some_results:
+    print(x)
