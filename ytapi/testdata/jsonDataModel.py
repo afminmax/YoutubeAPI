@@ -58,6 +58,12 @@ jsonFileData['ElderFox Documentaries']['_id']
 # include in the result. Using find_one() gets the first channel.
 collection.find_one({}, {'_id': 1})
 
+print(type(collection.find_one({}, {'_id': 1})))
+
+# to get ONLY the specific key id, this works because the return
+# from mongodb is a dictionary
+collection.find_one({}, {'_id': 1}).get('_id')
+
 # ---------------------------------------------------------------------------------
 # 4-GET THE ID OF ALL CHANNELS
 # json
@@ -69,6 +75,11 @@ for record in collection.find({}, {'_id': 1}):
     print(record)
     print('\n')
 
+# or to get the id's only:
+for record in collection.find({}, {'_id': 1}):
+    print(record.get('_id'))
+    print('\n')
+
 # ---------------------------------------------------------------------------------
 # 5-GET THE YOUTUBE ID OF ALL CHANNELS
 # json
@@ -77,7 +88,7 @@ for record in jsonFileData:
 
 # mongodb
 for record in collection.find({}, {'_id': 1, 'ytcId': 1}):
-    print(record)
+    print(record.get('ytcId'))
     print('\n')
 
 # ---------------------------------------------------------------------------------
@@ -89,7 +100,7 @@ for record in jsonFileData:
 
 # mongodb
 for record in collection.find({}, {'_id': 1, 'ytcId': 1, 'displayName': 1}):
-    print(record)
+    print(record.get('ytcId') + ' ' + record.get('displayName'))
     print('\n')
 
 # ---------------------------------------------------------------------------------
