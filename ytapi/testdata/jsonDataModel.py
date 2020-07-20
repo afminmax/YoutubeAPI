@@ -134,7 +134,6 @@ for record in jsonFileData:
 for record in collection.find({}, {'ytcId': 1, 'channelCounts.viewCount': 1}):
     print(record)
 
-
 # ---------------------------------------------------------------------------------
 # 9-COMPARE VALUES FROM JSON TO MONGODB
 # comparing by variable comparison
@@ -170,3 +169,8 @@ collection.find_one({'displayName': 'Launch Pad Astronomy'})
 some_results = collection.find({'displayName': {'$regex': 'Bec'}})
 for x in some_results:
     print(x)
+
+
+# add mongodb classes in code
+# check mongodb compression
+# check mongob with Vue.js
