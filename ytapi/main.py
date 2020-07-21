@@ -9,12 +9,11 @@ import json
 import dns.resolver  # this is in fact the dnspython package
 import pymongo
 from pymongo import MongoClient
-
 from connections import Connections
 
 
 # S2-READING THE API KEY
-dataFolder = Path("X:/Coding/YoutubeAPI/keys/")
+dataFolder = Path("Z:/YoutubeAPI/keys/")
 fileToOpen = dataFolder / "gapi.txt"
 with open(fileToOpen) as file:
     api_key = file.read()
@@ -46,40 +45,30 @@ collection.find()
 db.collection.find({}, {'_id': 1})
 
 for record in collection.find({}, {'_id': 1, 'ytcId': 1, 'displayName': 1, 'channelCounts.viewCount': 1}):
+    # print(record)
     print('Querying channel ' +
           record['displayName'] + ' with channel ID of: ' + record['ytcId'] + ' and system ID of: ' + str(record['_id']) +
-          ' a view count of: ' + record['channelCounts.viewCount']
-
-
-for record in collection.find({}, {'_id': 1, 'ytcId': 1, 'displayName': 1, 'viewCount': 1}):
-    print('Querying channel ' +
-          record['displayName'] + ' with channel ID of: ' + record['ytcId'] + ' and system ID of: ' + str(record['_id']) +
-          ' a view count of: ' + record['channelCounts'][0]['viewCount']
-
-    channelCounts[0].viewCount
+          ', with a view count of: ' + str(record['channelCounts'][0].get('viewCount')))
 
     yt=ChannelStats(api_key, record['ytcId'])
     channelStatistics=yt.get_channel_statistics()
     print(channelStatistics)
-    print('the view count for ' +
+    print('the current online view count for ' +
           record['displayName'] + ' is: ' + channelStatistics['viewCount'])
-    print('\n')
-    print(channelStatistics['viewCount'])
-
-    # ERROR is in finding the viewcount for the particular record in question
-    print(record['channelCounts'][0]['viewCount'])
-
-
-    if (int(channelStatistics["viewCount"]) == record["viewCount"]):
+    # print(channelStatistics['viewCount'])
+    
+    if (int(channelStatistics["viewCount"]) == record['channelCounts'][0].get('viewCount')):
         print('viewcounts match')
-    elif (int(channelStatistics['viewCount']) > record['viewCount']):
+    elif (int(channelStatistics['viewCount']) > record['channelCounts'][0].get('viewCount')):
         print('the current view count is: ' +
-              str(record['viewCount']) + '. The new view count is: ' + channelStatistics['viewCount'])
-
+              str(record['channelCounts'][0].get('viewCount')) + '. The new view count is: ' + channelStatistics['viewCount'])
+    
+    ## BREAKS HERE NOW
         collection.update_one({'_id': record['_id']}, {
-                              '$set': {'viewCount': int(channelStatistics['viewCount'])}})
+                              '$set': {'channelCounts.viewCount': int(channelStatistics['viewCount'])}})
         print('the new updated view count is: ' +
               channelStatistics['viewCount'])
+    print('\n')1
     # print()
     # yt.update_channel_statistics()
 

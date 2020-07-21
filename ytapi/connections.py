@@ -3,7 +3,7 @@ import pymongo
 from pymongo import MongoClient
 
 
-dataFolder = Path("X:/Coding/YoutubeAPI/keys/")
+dataFolder = Path("Z:/YoutubeAPI/keys/")
 
 
 class Connections:

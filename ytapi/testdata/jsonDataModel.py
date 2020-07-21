@@ -14,7 +14,7 @@ print(jsonFileData)
 print(type(jsonFileData))
 
 # MAKE MONGODB CONNECTION
-dataFolder = Path("X:/Coding/YoutubeAPI/keys/")
+dataFolder = Path("Z:/YoutubeAPI/keys/")
 fileToOpen = dataFolder / "dbc.txt"
 with open(fileToOpen) as file:
     dbc_key = file.read()
@@ -132,7 +132,8 @@ for record in jsonFileData:
 # mongodb
 # hint - must use dot notation to get to sub-docs
 for record in collection.find({}, {'ytcId': 1, 'channelCounts.viewCount': 1}):
-    print(record)
+    # print(record)
+    print(record['channelCounts'][0].get('viewCount'))
 
 # ---------------------------------------------------------------------------------
 # 9-COMPARE VALUES FROM JSON TO MONGODB
@@ -170,6 +171,15 @@ some_results = collection.find({'displayName': {'$regex': 'Bec'}})
 for x in some_results:
     print(x)
 
+
+# ---------------------------------------------------------------------------------
+# 11-MONGODB UPDATE ONE VALUE AT ROOT
+# find a specific channel id by mongodb id:
+
+
+# ---------------------------------------------------------------------------------
+# 12-MONGODB UPDATE ONE VALUE IN A SUB ELEMENT (DOCUMENT)
+# find a specific channel id by mongodb id:
 
 # add mongodb classes in code
 # check mongodb compression
