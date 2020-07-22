@@ -30,43 +30,8 @@ collection = db['ytchannels']
 print('the db key to be used is: ' + dbc_key)
 
 # S4-Query each video direct from DB
-# this method chosen over creating a separate list, because
-# a seperate list may be deconstructed due to system/memory crash.
-# if iterated across the db, failure can only happen in the record
-# being processed.
 
-startTS1 = datetime.datetime.now()
-for record in collection.find({}, {'_id': 1, 'ytcId': 1, 'displayName': 1, 'channelCounts.viewCount': 1}):
-    print('Querying channel ' +
-          record['displayName'] + ' with channel ID of: ' + record['ytcId'] + ' and system ID of: ' + str(record['_id']) +
-          ', with a view count of: ' + str(record['channelCounts'][0].get('viewCount')))
-
-    yt = ChannelStats(api_key, record['ytcId'])
-    channelStatistics = yt.get_channel_statistics()
-    # print(channelStatistics)
-    ytViewCount = int(channelStatistics['viewCount'])
-    print(ytViewCount)
-    print('\n')
-
-    if (int(channelStatistics["viewCount"]) == record['channelCounts'][0].get('viewCount')):
-        print('viewcounts match')
-    elif (int(channelStatistics['viewCount']) > record['channelCounts'][0].get('viewCount')):
-        print('Viewcounts do not match and update to be done. The current db view count is: ' +
-              str(record['channelCounts'][0].get('viewCount')) + '. The new view count is: ' + channelStatistics['viewCount'])
-
-        collection.update_one({'_id': record['_id']}, {
-                              '$set': {'channelCounts.0.viewCount': int(channelStatistics['viewCount'])}})
-        print('the new updated view count is: ' +
-              channelStatistics['viewCount'])
-    print('\n')
-
-endTS1 = datetime.datetime.now()
-elapsedTime1 = endTS1 - startTS1
-print(elapsedTime)
-
-# ****************************************************************************************************************************#
-
-startTS2 = datetime.datetime.now()
+startTS = datetime.datetime.now()
 for record in collection.find({}, {'_id': 1, 'ytcId': 1, 'displayName': 1, 'channelCounts.viewCount': 1}):
     dbChannelId = record['_id']
     dbYtChannelId = record['ytcId']
@@ -77,11 +42,9 @@ for record in collection.find({}, {'_id': 1, 'ytcId': 1, 'displayName': 1, 'chan
           dbChannelDisplayName + ' with YT channel ID of: ' + dbYtChannelId + ' and system ID of: ' + str(dbChannelId) +
           ', with a view count of: ' + str(dbChannelViewCount))
 
-    yt = ChannelStats(api_key, record['ytcId'])
-    channelStatistics = yt.get_channel_statistics()
-    # print(channelStatistics)
-
-    ytViewCount = int(channelStatistics['viewCount'])
+    ytChannelFetch = ChannelStats(api_key, record['ytcId'])
+    fetchedChannelStatistics = ytChannelFetch.get_channel_statistics()
+    ytViewCount = int(fetchedChannelStatistics['viewCount'])
     print(ytViewCount)
     print('\n')
 
@@ -89,13 +52,16 @@ for record in collection.find({}, {'_id': 1, 'ytcId': 1, 'displayName': 1, 'chan
         print('viewcounts match')
     elif (ytViewCount > dbChannelViewCount):
         print('Viewcounts do not match and update to be done. The current db view count is: ' +
-              str(dbChannelViewCount) + '. The new view count is: ' + str(ytViewCount))
+              str(dbChannelViewCount) + '. The new live view count from YT is: ' + str(ytViewCount))
 
         collection.update_one({'_id': dbChannelId}, {
                               '$set': {'channelCounts.0.viewCount': ytViewCount}})
-        print('the new updated view count is: ' + ytViewCount)
+        updatedDbChannelViewCount = collection.find_one({'_id': dbChannelId}, {
+                                                        'channelCounts.viewCount': 1}).get('channelCounts')[0]['viewCount']
+        print('the new updated db view count is: ' +
+              str(updatedDbChannelViewCount))
     print('\n')
 
-endTS2 = datetime.datetime.now()
-elapsedTime2 = endTS2 - startTS2
-print(elapsedTime2)
+endTS = datetime.datetime.now()
+elapsedTime = endTS - startTS
+print(elapsedTime)

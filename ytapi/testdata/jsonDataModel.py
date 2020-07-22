@@ -171,6 +171,11 @@ some_results = collection.find({'displayName': {'$regex': 'Bec'}})
 for x in some_results:
     print(x)
 
+# get the viewCount of a specific channel by the channel's db id
+# this gets the final value - note that a list must be accessed from within the returned dictionary thus the square brackets
+fetchedViewCount = collection.find_one(
+    {'_id': 1}, {'channelCounts.viewCount': 1}).get('channelCounts')[0]['viewCount']
+print(fetchedViewCount)
 
 # ---------------------------------------------------------------------------------
 # 11-MONGODB UPDATE ONE VALUE AT ROOT
