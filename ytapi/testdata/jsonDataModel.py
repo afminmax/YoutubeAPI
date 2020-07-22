@@ -174,12 +174,20 @@ for x in some_results:
 
 # ---------------------------------------------------------------------------------
 # 11-MONGODB UPDATE ONE VALUE AT ROOT
-# find a specific channel id by mongodb id:
+# update a single field at the root level by item id.
+# the first parameter of the update_one() method is a query object defining which document to update inside its own {}
+# the second parameter is an object defining the new values of the document. {set: {key-value}}
+# example below, change the display name of the first record to "A Blank Name"
+collection.update_one(
+    {'_id': 1}, {'$set': {"displayName": "ElderFox Documentaries"}})
 
 
 # ---------------------------------------------------------------------------------
 # 12-MONGODB UPDATE ONE VALUE IN A SUB ELEMENT (DOCUMENT)
 # find a specific channel id by mongodb id:
+collection.update_one(
+    {'_id': 1}, {'$set': {"channelCounts.0.viewCount": 10}})
+
 
 # add mongodb classes in code
 # check mongodb compression
