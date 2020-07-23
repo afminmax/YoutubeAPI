@@ -193,6 +193,10 @@ collection.update_one(
 collection.update_one(
     {'_id': 1}, {'$set': {"channelCounts.0.viewCount": 10}})
 
+# ---------------------------------------------------------------------------------
+# 13-MONGODB TIME
+# find a specific channel id by mongodb id:
+
 
 # add mongodb classes in code
 # check mongodb compression

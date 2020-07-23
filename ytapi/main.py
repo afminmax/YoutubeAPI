@@ -29,7 +29,7 @@ db = myClient['channelsDB']
 collection = db['ytchannels']
 print('the db key to be used is: ' + dbc_key)
 
-# S4-Query each video direct from DB
+# S4-QUERY YOUTUBE FOR THE STATISTICS OF EACH CHANNEL IN THE DATABASE
 
 startTS = datetime.datetime.now()
 for record in collection.find({}, {'_id': 1, 'ytcId': 1, 'displayName': 1, 'channelCounts.viewCount': 1}):
