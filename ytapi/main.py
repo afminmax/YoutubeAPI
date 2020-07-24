@@ -60,6 +60,13 @@ for record in collection.find({}, {'_id': 1, 'ytcId': 1, 'displayName': 1, 'chan
                                                         'channelCounts.viewCount': 1}).get('channelCounts')[0]['viewCount']
         print('the new updated db view count is: ' +
               str(updatedDbChannelViewCount))
+
+        collection.update_one(
+            {'_id': 3}, {'$set': {'channelCounts.0.lastUpdate': datetime.datetime.utcnow()}})
+
+        collection.update_one(
+            {'_id': 3}, {'$set': {'lastUpdate': datetime.datetime.utcnow()}})
+
     print('\n')
 
 endTS = datetime.datetime.now()

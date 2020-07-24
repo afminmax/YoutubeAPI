@@ -6,6 +6,7 @@ import pymongo
 from pymongo import MongoClient
 import json
 from pathlib import Path
+import datetime
 
 # MAKE LOCAL JSON CONNECTION
 with open('mdb-channel-document.json') as json_file:
@@ -195,8 +196,23 @@ collection.update_one(
 
 # ---------------------------------------------------------------------------------
 # 13-MONGODB TIME
-# find a specific channel id by mongodb id:
+# get the last channel update dts at the channel root
+lastUpdated = collection.find_one(
+    {'_id': 3}, {'lastUpdate': 1}).get('lastUpdate')
+print(lastUpdated)
 
+# update the last channel update dts at the channel root
+collection.update_one(
+    {'_id': 3}, {'$set': {'lastUpdate': datetime.datetime.utcnow()}})
+
+# get the last channel update dts in the channel counts sub-document
+lastUpdated = collection.find_one(
+    {'_id': 3}, {'channelCounts.lastUpdate': 1}).get('channelCounts')[0]['lastUpdate']
+print(lastUpdated)
+
+# update the last channel update dts in the channel counts sub-document
+collection.update_one(
+    {'_id': 3}, {'$set': {'channelCounts.0.lastUpdate': datetime.datetime.utcnow()}})
 
 # add mongodb classes in code
 # check mongodb compression
