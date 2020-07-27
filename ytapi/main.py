@@ -79,7 +79,14 @@ for record in collection.find({}, {'_id': 1, 'ytcId': 1, 'displayName': 1,
     print('\n')
 
     # pass db and collection to the class ChannelDbOps and print the objects to test they are passed
-    ChannelDbOps(db, collection).__str__()
+    # ChannelDbOps(db, collection).__str__()
+
+    # create an instance of the dbOps object
+    cdops = ChannelDbOps(db, collection)
+    # cdops.__str__()
+
+    valyew = cdops.peek(dbChannelId)
+    print(valyew)
 
 endTS = datetime.datetime.now()
 elapsedTime = endTS - startTS
