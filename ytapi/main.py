@@ -87,6 +87,11 @@ for record in collection.find({}, {'_id': 1, 'ytcId': 1, 'displayName': 1,
 
     valyew = cdops.peek(dbChannelId)
     print(valyew)
+    x = 727
+    cdops.update(dbChannelId, x)
+
+    valx = cdops.peek(dbChannelId)
+    print(valx)
 
 endTS = datetime.datetime.now()
 elapsedTime = endTS - startTS
