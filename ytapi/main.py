@@ -26,10 +26,10 @@ print('the youtube api key to be used is: ' + api_key)
 # S3-GETTING THE DB INFO AND SETTING UP THE CONNECTION
 fileToOpen = dataFolder / "dbc.txt"
 with open(fileToOpen) as file:
-    dbc_key = file.read()
+    dbc_key = file.read()x1
 myClient = MongoClient(dbc_key)
 db = myClient['channelsDB']
-collection = db['ytchannels']
+collection = db['ChannelMetadata']
 print('the db key to be used is: ' + dbc_key)
 
 
