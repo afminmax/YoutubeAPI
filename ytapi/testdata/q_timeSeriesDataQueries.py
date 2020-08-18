@@ -134,6 +134,8 @@ viewCount_dict.get(str(day_of_year - 21))
 viewCount_dict.get(str(day_of_year - 28))
 
 # ---------------------------------------------------------------------------------
-# DICTIONARY TO PANDAS DATAFRAME
+# 7-DICTIONARY TO PANDAS DATAFRAME
 df = pd.Series(viewCount_dict).to_frame('Counts')
 df.head()
+
+# Other analysis queries here later.
