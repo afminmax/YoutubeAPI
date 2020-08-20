@@ -1,13 +1,19 @@
 # dependencies
+node_modules
 
 # testing
+coverage
 
 # production
 __pycache__/
+build
 
 # misc
 .env
 *.json
+.DS_Store
+npm-debug.log
+.zip
 
 # key directories
 keys/
