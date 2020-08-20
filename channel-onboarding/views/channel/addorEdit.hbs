@@ -1,6 +1,6 @@
 <h3>{{viewTitle}}</h3>
 
-<form>
+<form action='/channel' method="POST" autocapitalize="off">
     <div class="form-group">
         <label>Channel Name</label>
         <input type="text" class="form-control" name="channelName" placeholder="Channel Name">
@@ -9,14 +9,17 @@
         <label>Channel Id</label>
         <input type="text" class="form-control" name="ytcId" placeholder="Channel ID">
     </div>
-    <div class="form-group col-md-6">
-        <label>Nation</label>
-        <input type="text" class="form-control" name="primaryNation" placeholder="Nation">
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Nation</label>
+            <input type="text" class="form-control" name="primaryNation" placeholder="Nation">
+        </div>
+        <div class="form-group col-md-6">
+            <label>Language</label>
+            <input type="text" class="form-control" name="language" placeholder="Language">
+        </div>
     </div>
-    <div class="form-group col-md-6">
-        <label>Language</label>
-        <input type="text" class="form-control" name="language" placeholder="Language">
-    </div>
+
     <div class="form-group">
         <button type="submit" class="btn btn-info"><i class="fa fa-database"></i>Submit</button>
     </div>

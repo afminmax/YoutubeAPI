@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
+require('./channel.model');
 
 // Read the mongodb key from here:
 const fs = require('fs');
