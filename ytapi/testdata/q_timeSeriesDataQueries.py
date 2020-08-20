@@ -1,5 +1,3 @@
-from _typeshed import FileDescriptor
-from fiscalyear import FiscalQuarter
 import pymongo
 from pymongo import MongoClient
 import json
@@ -139,3 +137,7 @@ df = pd.Series(viewCount_dict).to_frame('Counts')
 df.head()
 
 # Other analysis queries here later.
+
+# ---------------------------------------------------------------------------------
+# 8-ADD SIMPLE RECORD TO A COLLECTION TO TEST CONNECTIVITY
+collection.insert_one({"name": "Anya", "age": 22, "state": "New York"})
