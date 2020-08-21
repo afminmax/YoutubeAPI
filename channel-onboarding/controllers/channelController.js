@@ -27,18 +27,21 @@ function insertRecord(req, res) {
   channel.email = req.body.email;
   channel.save((err, doc) => {
     if (!err) res.redirect('channel/list');
+    // if no error, go to the list
     else {
       if (err.name == 'ValidationError') {
-        handleValidationError(err, req.body);
+        // if there is a validation error, refresh page with alerts
+        handleValidationError(err, req.body); // calls the validation helper function
         res.render('channel/addOrEdit', {
           viewTitle: 'Insert Channel',
           channel: req.body,
         });
-      } else console.log('Error during record insertion : ' + err);
+      } else console.log('Error during record insertion : ' + err); // catches any other errors, eg db/conn
     }
   });
 }
 
+// validation helper function
 function handleValidationError(err, body) {
   for (field in err.errors) {
     switch (err.errors[field].path) {
@@ -55,6 +58,29 @@ function handleValidationError(err, body) {
 }
 
 // after record insert, redirect to a new page called 'list' that lists the inserted content
-router.get('/list', function (req, res) {
-  res.json('list contents of insert here');
+router.get('/list', (req, res) => {
+  Channel.find((err, docs) => {
+    if (!err) {
+      res.render('channel/list', {
+        list: docs, //pre-handlebars post 4.6.0
+        // list: docs.map((doc) => doc.toJSON()), //updated for handlebars post 4.6.0
+      });
+    } else {
+      console.log('Error retrieving the channel list :' + err);
+    }
+  });
 });
+// Note: https://github.com/handlebars-lang/handlebars.js/issues/1642
+
+router.get('/:id', (req, res) => {
+  Channel.findById(req.params.id, (err, doc) => {
+    if (!err) {
+      res.render('channel/addOrEdit', {
+        viewTitle: 'Update Channel',
+        channel: doc,
+      });
+    }
+  });
+});
+
+// (doc = doc.toJSON()),

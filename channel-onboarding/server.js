@@ -2,6 +2,12 @@ require('./models/db');
 const express = require('express');
 const path = require('path');
 const exphbs = require('express-handlebars');
+
+const Handlebars = require('handlebars');
+const {
+  allowInsecurePrototypeAccess,
+} = require('@handlebars/allow-prototype-access');
+
 const bodyparser = require('body-parser');
 const app = express();
 app.use(
@@ -17,6 +23,7 @@ app.engine(
     extname: 'hbs',
     defaultLayout: 'mainLayout',
     layoutsDir: __dirname + '/views/layouts/',
+    handlebars: allowInsecurePrototypeAccess(Handlebars),
   })
 );
 

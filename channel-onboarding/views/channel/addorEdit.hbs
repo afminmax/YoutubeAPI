@@ -1,6 +1,7 @@
 <h3>{{viewTitle}}</h3>
 
-<form action="/channel" method="POST">
+<form action="/channel" method="POST" autocomplete="off">
+    <input type="hidden" name="_id" value="{{channel.id}}">
     <div class="form-group">
         <label>Channel Name</label>
         <input type="text" class="form-control" name="channelName" placeholder="" value="{{channel.channelName}}">
@@ -36,5 +37,6 @@
 
     <div class="form-group">
         <button type="submit" class="btn btn-info"><i class="fa fa-database"></i> Submit</button>
+        <a class="btn btn-secondary" href="/channel/list"><i class="fa fa-list-alt"></i> View All</a>
     </div>
 </form>

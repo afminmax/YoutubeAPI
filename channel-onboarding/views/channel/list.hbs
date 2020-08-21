@@ -1,0 +1,32 @@
+<h3><a class="btn btn-secondary" href="/channel"><i class="fa fa-plus"></i> Create New</a> Channel List</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Channel Name</th>
+            <th>Channel ID</th>
+            <th>Nation</th>
+            <th>Language</th>
+            <th>Alias</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each list}}
+        <tr>
+            <td>{{this.channelName}}</td>
+            <td>{{this.ytcId}}</td>
+            <td>{{this.primaryNation}}</td>
+            <td>{{this.language}}</td>
+            <td>{{this.channelAlias}}</td>
+            <td>{{this.email}}</td>
+            <td>
+                <a href="/channel/{{this._id}}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+                <a href="/channel/delete/{{this._id}}"
+                    onclick="return confirm('Are you sure to delete this record ?');"><i class="fa fa-trash fa-lg"
+                        aria-hidden="true"></i></a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
