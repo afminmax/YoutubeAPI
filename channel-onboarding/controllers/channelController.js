@@ -15,7 +15,8 @@ router.get('/', function (req, res) {
 // data into the database, the helper function "insertRecord" is used to insert
 router.post('/', function (req, res) {
   console.log(req.body);
-  insertRecord(req, res);
+  if (req.body._id == '') insertRecord(req, res);
+  else updateRecord(req, res);
 });
 
 function insertRecord(req, res) {
@@ -40,6 +41,38 @@ function insertRecord(req, res) {
     }
   });
 }
+// update a channel's record
+function updateRecord(req, res) {
+  Channel.findOneAndUpdate(
+    { _id: req.body._id },
+    req.body,
+    { new: true },
+    (err, doc) => {
+      if (!err) {
+        res.redirect('channel/list');
+      } else {
+        if (err.name == 'ValidationError') {
+          handleValidationError(err, req.body);
+          res.render('channel/addOrEdit', {
+            viewTitle: 'Update Channel',
+            employee: req.body,
+          });
+        } else console.log('Channel update error occurred : ' + err);
+      }
+    }
+  );
+}
+
+// delete a channel
+router.get('/delete/:id', (req, res) => {
+  Channel.findByIdAndRemove(req.params.id, (err, doc) => {
+    if (!err) {
+      res.redirect('/channel/list');
+    } else {
+      console.log('Channel delete error occurred :' + err);
+    }
+  });
+});
 
 // validation helper function
 function handleValidationError(err, body) {
@@ -72,6 +105,7 @@ router.get('/list', (req, res) => {
 });
 // Note: https://github.com/handlebars-lang/handlebars.js/issues/1642
 
+// this route allows us to find a record by id and present it on the main crud page for eventual update
 router.get('/:id', (req, res) => {
   Channel.findById(req.params.id, (err, doc) => {
     if (!err) {
