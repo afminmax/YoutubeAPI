@@ -24,13 +24,34 @@ function insertRecord(req, res) {
   channel.ytcId = req.body.ytcId;
   channel.primaryNation = req.body.primaryNation;
   channel.language = req.body.language;
+  channel.email = req.body.email;
   channel.save((err, doc) => {
-    if (!err) {
-      res.redirect('channel/list');
-    } else {
-      console.log('Error during record insertion : ' + err);
+    if (!err) res.redirect('channel/list');
+    else {
+      if (err.name == 'ValidationError') {
+        handleValidationError(err, req.body);
+        res.render('channel/addOrEdit', {
+          viewTitle: 'Insert Channel',
+          channel: req.body,
+        });
+      } else console.log('Error during record insertion : ' + err);
     }
   });
+}
+
+function handleValidationError(err, body) {
+  for (field in err.errors) {
+    switch (err.errors[field].path) {
+      case 'channelName':
+        body['channelNameError'] = err.errors[field].message;
+        break;
+      case 'email':
+        body['emailError'] = err.errors[field].message;
+        break;
+      default:
+        break;
+    }
+  }
 }
 
 // after record insert, redirect to a new page called 'list' that lists the inserted content

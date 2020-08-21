@@ -3,20 +3,34 @@
 <form action="/channel" method="POST">
     <div class="form-group">
         <label>Channel Name</label>
-        <input type="text" class="form-control" name="channelName" placeholder="">
+        <input type="text" class="form-control" name="channelName" placeholder="" value="{{channel.channelName}}">
+        <div class="text-danger">{{channel.channelNameError}}</div>
     </div>
     <div class="form-group">
         <label>Channel Id</label>
-        <input type="text" class="form-control" name="ytcId" placeholder="">
+        <input type="text" class="form-control" name="ytcId" placeholder="" value="{{channel.ytcId}}">
+        <div class="text-danger">{{channel.ytcIdError}}</div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
             <label>Nation</label>
-            <input type="text" class="form-control" name="primaryNation" placeholder="">
+            <input type="text" class="form-control" name="primaryNation" placeholder=""
+                value="{{channel.primaryNation}}">
         </div>
         <div class="form-group col-md-6">
             <label>Language</label>
-            <input type="text" class="form-control" name="language" placeholder="">
+            <input type="text" class="form-control" name="language" placeholder="" value="{{channel.language}}">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Alias</label>
+            <input type="text" class="form-control" name="channelAlias" placeholder="" value="{{channel.channelAlias}}">
+        </div>
+        <div class="form-group col-md-6">
+            <label>E-mail</label>
+            <input type="text" class="form-control" name="email" placeholder="" value="{{channel.email}}">
+            <div class="text-danger">{{channel.emailError}}</div>
         </div>
     </div>
 
