@@ -71,6 +71,10 @@ function insertRecord(req, res) {
       } else console.log('Error during record insertion : ' + err); // catches any other errors, eg db/conn
     }
   });
+
+  // // setup here for adding channel time series document with new channel
+  // var channelTimeData = new channelTimeData()
+  // channelTimeData.save()
 }
 // update a channel's record
 function updateRecord(req, res) {

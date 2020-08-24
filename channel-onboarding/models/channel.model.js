@@ -37,6 +37,14 @@ var channelSchema = new mongoose.Schema({
   lastUpdate: { type: Date },
 });
 
+var channelTimeSeriesSchema = new mongoose.Schema({
+  ytcId: {
+    type: String,
+    unique: true,
+  },
+  dateAdded: { type: Date },
+});
+
 //// Custom validation for email
 // channelSchema.path('email').validate((val) => {
 //   emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -44,3 +52,4 @@ var channelSchema = new mongoose.Schema({
 // }, 'Invalid e-mail.');
 
 mongoose.model('Channel', channelSchema);
+mongoose.model('ChannelTimeData', channelTimeDataSchema);
