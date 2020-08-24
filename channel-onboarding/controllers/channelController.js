@@ -19,6 +19,19 @@ router.post('/', function (req, res) {
   else updateRecord(req, res);
 });
 
+let dupe = false;
+function ytcidCheck(id) {
+  Channel.countDocuments({ ytcId: id }, (err, docCount) => {
+    if (docCount > 0) {
+      console.log('boo');
+      console.log('count = ' + docCount);
+      dupe = true;
+    } else {
+      console.log('move on to completion');
+    }
+  });
+}
+
 function insertRecord(req, res) {
   var channel = new Channel();
   channel.channelName = req.body.channelName;
@@ -26,19 +39,31 @@ function insertRecord(req, res) {
   channel.primaryNation = req.body.primaryNation;
   channel.language = req.body.language;
   channel.email = req.body.email;
+
+  ytcidCheck(channel.ytcId);
+
   channel.save((err, doc) => {
-    if (!err) res.redirect('channel/list');
-    // if no error, go to the list
-    else {
-      if (err.name == 'ValidationError') {
-        // if there is a validation error, refresh page with alerts
-        handleValidationError(err, req.body); // calls the validation helper function
-        res.render('channel/addOrEdit', {
-          viewTitle: 'Insert Channel',
-          channel: req.body,
-        });
-      } else console.log('Error during record insertion : ' + err); // catches any other errors, eg db/conn
-    }
+    //if no dupes run this
+    Channel.countDocuments({ ytcId: channel.ytcId }, (docCount) => {
+      if (docCount > 0) {
+        console.log('boo');
+        console.log('count = ' + docCount);
+        alert('there is a dupe');
+      } else {
+        console.log('move on to completion');
+        if (!err) res.redirect('channel/list');
+        else {
+          if (err.name == 'ValidationError') {
+            // if there is a validation error, refresh page with alerts
+            handleValidationError(err, req.body); // calls the validation helper function
+            res.render('channel/addOrEdit', {
+              viewTitle: 'Insert Channel',
+              channel: req.body,
+            });
+          } else console.log('Error during record insertion : ' + err); // catches any other errors, eg db/conn
+        }
+      }
+    });
   });
 }
 // update a channel's record
@@ -55,7 +80,7 @@ function updateRecord(req, res) {
           handleValidationError(err, req.body);
           res.render('channel/addOrEdit', {
             viewTitle: 'Update Channel',
-            employee: req.body,
+            channel: req.body,
           });
         } else console.log('Channel update error occurred : ' + err);
       }
@@ -80,6 +105,9 @@ function handleValidationError(err, body) {
     switch (err.errors[field].path) {
       case 'channelName':
         body['channelNameError'] = err.errors[field].message;
+        break;
+      case 'ytcId':
+        body['ytcIdError'] = err.errors[field].message;
         break;
       case 'email':
         body['emailError'] = err.errors[field].message;
@@ -116,5 +144,3 @@ router.get('/:id', (req, res) => {
     }
   });
 });
-
-// (doc = doc.toJSON()),

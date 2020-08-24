@@ -2,7 +2,12 @@ const mongoose = require('mongoose');
 
 var channelSchema = new mongoose.Schema({
   channelName: { type: String, required: 'Required Field' },
-  ytcId: { type: String },
+  ytcId: {
+    type: String,
+    unique: true,
+    required: 'Required Field',
+    ytcIdError: 'Channel Exists',
+  },
   primaryNation: { type: String },
   language: { type: String },
   channelAlias: { type: String },
