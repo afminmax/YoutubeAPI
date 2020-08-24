@@ -33,17 +33,17 @@ function insertRecord(req, res) {
   channel.comments = req.body.comments;
 
   // references
-  channel.email = req.body.email;
-  channel.website = req.body.website;
-  channel.twitter = req.body.twitter;
-  channel.facebook = req.body.facebook;
-  channel.instagram = req.body.instagram;
-  channel.twitch = req.body.twitch;
-  channel.wechat = req.body.wechat;
-  channel.tiktok = req.body.tiktok;
-  channel.otherYt = req.body.otherYt;
-  channel.vimeo = req.body.vimeo;
-  channel.misc = req.body.misc;
+  channel.references.email = req.body.email;
+  channel.references.website = req.body.website;
+  channel.references.twitter = req.body.twitter;
+  channel.references.facebook = req.body.facebook;
+  channel.references.instagram = req.body.instagram;
+  channel.references.twitch = req.body.twitch;
+  channel.references.wechat = req.body.wechat;
+  channel.references.tiktok = req.body.tiktok;
+  channel.references.otherYt = req.body.otherYt;
+  channel.references.vimeo = req.body.vimeo;
+  channel.references.misc = req.body.misc;
 
   // hidden fields
   channel.active = Boolean(true);
