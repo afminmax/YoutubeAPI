@@ -19,19 +19,6 @@ router.post('/', function (req, res) {
   else updateRecord(req, res);
 });
 
-let dupe = false;
-function ytcidCheck(id) {
-  Channel.countDocuments({ ytcId: id }, (err, docCount) => {
-    if (docCount > 0) {
-      console.log('boo');
-      console.log('count = ' + docCount);
-      dupe = true;
-    } else {
-      console.log('move on to completion');
-    }
-  });
-}
-
 function insertRecord(req, res) {
   var channel = new Channel();
   channel.channelName = req.body.channelName;
@@ -40,30 +27,21 @@ function insertRecord(req, res) {
   channel.language = req.body.language;
   channel.email = req.body.email;
 
-  ytcidCheck(channel.ytcId);
-
   channel.save((err, doc) => {
     //if no dupes run this
-    Channel.countDocuments({ ytcId: channel.ytcId }, (docCount) => {
-      if (docCount > 0) {
-        console.log('boo');
-        console.log('count = ' + docCount);
-        alert('there is a dupe');
-      } else {
-        console.log('move on to completion');
-        if (!err) res.redirect('channel/list');
-        else {
-          if (err.name == 'ValidationError') {
-            // if there is a validation error, refresh page with alerts
-            handleValidationError(err, req.body); // calls the validation helper function
-            res.render('channel/addOrEdit', {
-              viewTitle: 'Insert Channel',
-              channel: req.body,
-            });
-          } else console.log('Error during record insertion : ' + err); // catches any other errors, eg db/conn
-        }
-      }
-    });
+    //else run below
+    if (!err) res.redirect('channel/list');
+    // if no error, go to the list
+    else {
+      if (err.name == 'ValidationError') {
+        // if there is a validation error, refresh page with alerts
+        handleValidationError(err, req.body); // calls the validation helper function
+        res.render('channel/addOrEdit', {
+          viewTitle: 'Insert Channel',
+          channel: req.body,
+        });
+      } else console.log('Error during record insertion : ' + err); // catches any other errors, eg db/conn
+    }
   });
 }
 // update a channel's record
