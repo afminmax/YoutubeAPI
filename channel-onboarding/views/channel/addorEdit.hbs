@@ -1,16 +1,30 @@
 <h3>{{viewTitle}}</h3>
 
 <form action="/channel" method="POST" autocomplete="off">
+    {{!-- put hidden fields here --}}
     <input type="hidden" name="_id" value="{{channel.id}}">
+    <input type="hidden" name="active" value="{{channel.active}}">
+    <input type="hidden" name="videoIds" value="{{channel.videoIds}}">
+    <input type="hidden" name="playListIds" value="{{channel.playListIds}}">
+    <input type="hidden" name="afmsites" value="{{channel.afmsites}}">
+    <input type="hidden" name="addedBy" value="{{channel.addedBy}}">
+    <input type="hidden" name="dateAdded" value="{{channel.dateAdded}}">
+    <input type="hidden" name="datePaused" value="{{channel.datePaused}}">
+    <input type="hidden" name="lastUpdate" value="{{channel.lastUpdate}}">
+    {{!-- end hidden fields --}}
+    <div class="form-group">
+        <label>Channel Id</label>
+        <input type="text" class="form-control" name="ytcId" placeholder="" value="{{channel.ytcId}}">
+        <div class="text-danger">{{channel.ytcIdError}}</div>
+    </div>
     <div class="form-group">
         <label>Channel Name</label>
         <input type="text" class="form-control" name="channelName" placeholder="" value="{{channel.channelName}}">
         <div class="text-danger">{{channel.channelNameError}}</div>
     </div>
     <div class="form-group">
-        <label>Channel Id</label>
-        <input type="text" class="form-control" name="ytcId" placeholder="" value="{{channel.ytcId}}">
-        <div class="text-danger">{{channel.ytcIdError}}</div>
+        <label>Channel Description</label>
+        <input type="text" class="form-control" name="description" placeholder="" value="{{channel.description}}">
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
@@ -25,14 +39,61 @@
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
-            <label>Alias</label>
-            <input type="text" class="form-control" name="channelAlias" placeholder="" value="{{channel.channelAlias}}">
+            <label>Main Theme</label>
+            <input type="text" class="form-control" name="mainTheme" placeholder="" value="{{channel.mainTheme}}">
         </div>
         <div class="form-group col-md-6">
-            <label>E-mail</label>
-            <input type="text" class="form-control" name="email" placeholder="" value="{{channel.email}}">
-            <div class="text-danger">{{channel.emailError}}</div>
+            <label>Tags</label>
+            <input type="text" class="form-control" name="tags" placeholder="" value="{{channel.tags}}">
         </div>
+        <div class="form-group col-md-6">
+            <label>E-mail(s)</label>
+            <input type="text" class="form-control" name="email" placeholder="" value="{{channel.email}}">
+        </div>
+        <div class="form-group col-md-6">
+            <label>Website(s)</label>
+            <input type="text" class="form-control" name="website" placeholder="" value="{{channel.website}}">
+        </div>
+        <div class="form-group col-md-6">
+            <label>Twitter Handles</label>
+            <input type="text" class="form-control" name="twitter" placeholder="" value="{{channel.twitter}}">
+        </div>
+        <div class="form-group col-md-6">
+            <label>Facebook Pages</label>
+            <input type="text" class="form-control" name="facebook" placeholder="" value="{{channel.facebook}}">
+        </div>
+        <div class="form-group col-md-6">
+            <label>Instagram(s)</label>
+            <input type="text" class="form-control" name="instagram" placeholder="" value="{{channel.instagram}}">
+        </div>
+        <div class="form-group col-md-6">
+            <label>Twitch TV</label>
+            <input type="text" class="form-control" name="twitch" placeholder="" value="{{channel.twitch}}">
+        </div>
+        <div class="form-group col-md-6">
+            <label>Wechat(s)</label>
+            <input type="text" class="form-control" name="wechat" placeholder="" value="{{channel.wechat}}">
+        </div>
+        <div class="form-group col-md-6">
+            <label>TikTok</label>
+            <input type="text" class="form-control" name="tiktok" placeholder="" value="{{channel.tiktok}}">
+        </div>
+        <div class="form-group col-md-6">
+            <label>Other Youtube Channels</label>
+            <input type="text" class="form-control" name="otherYt" placeholder="" value="{{channel.otherYt}}">
+        </div>
+        <div class="form-group col-md-6">
+            <label>Vimeo Channels</label>
+            <input type="text" class="form-control" name="vimeo" placeholder="" value="{{channel.vimeo}}">
+        </div>
+        <div class="form-group col-md-6">
+            <label>Miscellaneous Social</label>
+            <input type="text" class="form-control" name="misc" placeholder="" value="{{channel.misc}}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Comments</label>
+        <input type="text" class="form-control" name="comments" placeholder="" value="{{channel.comments}}">
     </div>
 
     <div class="form-group">

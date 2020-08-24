@@ -21,17 +21,45 @@ router.post('/', function (req, res) {
 
 function insertRecord(req, res) {
   var channel = new Channel();
-  channel.channelName = req.body.channelName;
+
+  // channel metadata input fields
   channel.ytcId = req.body.ytcId;
+  channel.channelName = req.body.channelName;
+  channel.description = req.body.description;
   channel.primaryNation = req.body.primaryNation;
   channel.language = req.body.language;
+  channel.mainTheme = req.body.mainTheme;
+  channel.tags = req.body.tags;
+  channel.comments = req.body.comments;
+
+  // references
   channel.email = req.body.email;
+  channel.website = req.body.website;
+  channel.twitter = req.body.twitter;
+  channel.facebook = req.body.facebook;
+  channel.instagram = req.body.instagram;
+  channel.twitch = req.body.twitch;
+  channel.wechat = req.body.wechat;
+  channel.tiktok = req.body.tiktok;
+  channel.otherYt = req.body.otherYt;
+  channel.vimeo = req.body.vimeo;
+  channel.misc = req.body.misc;
+
+  // hidden fields
+  channel.active = Boolean(true);
+  channel.process = Boolean(true);
+  channel.videoIds = [];
+  channel.playListIds = [];
+  channel.afmSites = [];
+  channel.addedBy = 'afmadmin';
+  var dt = new Date();
+  channel.dateAdded = dt.toUTCString();
+  channel.datePaused = null;
+  channel.lastUpdate = null;
 
   channel.save((err, doc) => {
-    //if no dupes run this
-    //else run below
     if (!err) res.redirect('channel/list');
-    // if no error, go to the list
+    // if no error, go to the list view
     else {
       if (err.name == 'ValidationError') {
         // if there is a validation error, refresh page with alerts
