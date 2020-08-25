@@ -36,20 +36,23 @@ var channelSchema = new mongoose.Schema({
   datePaused: { type: Date },
   lastUpdate: { type: Date },
 });
+mongoose.model('Channel', channelSchema);
 
-var channelTimeSeriesSchema = new mongoose.Schema({
-  ytcId: {
-    type: String,
-    unique: true,
-  },
+var channelTimeSchema = new mongoose.Schema({
+  ytcId: { type: String, unique: true },
+  year: { type: Number },
   dateAdded: { type: Date },
+  lastUpdate: { type: Date },
+  viewCount: { type: Array },
+  commentCount: { type: Array },
+  subscriberCount: { type: Array },
+  videoCount: { type: Array },
+  playlistCount: { type: Array },
 });
+mongoose.model('ChannelTime', channelTimeSchema);
 
 //// Custom validation for email
 // channelSchema.path('email').validate((val) => {
 //   emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 //   return emailRegex.test(val);
 // }, 'Invalid e-mail.');
-
-mongoose.model('Channel', channelSchema);
-mongoose.model('ChannelTimeData', channelTimeDataSchema);
