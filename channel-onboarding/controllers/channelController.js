@@ -58,6 +58,7 @@ function insertRecord(req, res) {
   channel.datePaused = null;
   channel.lastUpdate = null;
 
+  // create the channel metadata document and insert it into mongodb
   channel.save((err, doc) => {
     if (!err) res.redirect('channel/list');
     // if no error, go to the list view
@@ -73,10 +74,10 @@ function insertRecord(req, res) {
     }
   });
 
-  // setup here for adding channel time series document with new channel
+  // create the channel time series document and insert it into mongodb
   var channelTime = new ChannelTime({
     ytcId: req.body.ytcId,
-    year: '2020',
+    year: dt.getFullYear(),
     dateAdded: dt.toUTCString(),
     lastUpdate: null,
     viewCount: {
